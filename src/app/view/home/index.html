@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    @@include('./component/css.html')
+    <link rel="stylesheet" href="/access/static/css/public.css">
+
+    <style>
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .list {
+            width: 100px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    @@include('./component/header.html')
+    {{if $key < 11}} <div class="list">21212</div>
+        {{/if}}
+        <div class="{{if $key == 11}}active{{/if}}" ng-click="click-open">大师傅士大夫</div>
+        <input type="text" {{if value}}checked="checked" {{/if}}>
+        PC首页
+        @@include('./component/footer.html')
+        <script>
+            var PAGE = 0;
+            var TATALE = 20;
+            var NAME = '不是把';
+        </script>
+
+        <script src="/access/static/js/common.js"></script>
+</body>
+
+</html>
