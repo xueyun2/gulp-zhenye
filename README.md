@@ -90,6 +90,8 @@ function cssTask() {
 
 ### 1.2.3. gulp-autoprefixer@8.0.0
 
+给`css`代码添加浏览器兼容前缀。
+
 > 由于高版本无法正常用`require`导入。
 
 **安装：**
@@ -111,6 +113,12 @@ function cssTask() {
 ```
 
 ### 1.2.4. gulp-htmlmin，gulp-clean-css，gulp-file-include
+
+压缩`HTML`并对静态代码划分一个个文件组件（公共模板）
+
+- `gulp-htmlmin`：压缩`html`代码。
+- `gulp-clean-css`：压缩`style`中的`css`代码。
+- `gulp-file-include`：讲静态`html`划分成一个个模板。
 
 **安装：**
 
@@ -171,8 +179,11 @@ function htmlTask() {
 
 ### 1.2.5. gulp-uglify，babel，@babel/preset-env
 
-`uglify`负责压缩`ES5`代码`babel`负责把`ES6`代码转换`ES5`。
-`@babel/preset-env`：`babel`处理转换预设插件，可以配置兼容浏览器版本。
+压缩和转换`JavaScript`代码。
+
+- `gulp-uglify`：压缩`ES5`代码。
+- `babel`：负责转换`ES6`或者更高版本`js`为低版本。
+- `@babel/preset-env`：基于`babel`的一个预设用于处理js兼容以及浏览器配置。通常和`babel`组合使用。
 
 **安装：**
 
@@ -237,6 +248,8 @@ function server() {
 ```
 
 ### 1.2.7. gulp-npm-dist
+
+打包`node_modules`中的依赖模块到指定目录中。
 
 **安装：**
 
