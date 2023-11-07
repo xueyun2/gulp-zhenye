@@ -18,10 +18,9 @@
     - [1.5.1. gulp-webserver](#151-gulp-webserver)
   - [1.6. 依赖打包插件](#16-依赖打包插件)
     - [1.6.1. gulp-npm-dist](#161-gulp-npm-dist)
-  - [1.7. 环境变量插件，其他工具插件。](#17-环境变量插件其他工具插件)
+  - [1.7. 环境变量插件，其他工具插件](#17-环境变量插件其他工具插件)
     - [1.7.1. gulp-replace，gulp-if，cross-env](#171-gulp-replacegulp-ifcross-env)
       - [1.7.1.1. 配置package.json打包命令和开发命令](#1711-配置packagejson打包命令和开发命令)
-
 
 ## 1.1. 常用API基础用法
 
@@ -284,7 +283,7 @@ function atuoRelyTask() {
 }
 ```
 
-## 1.7. 环境变量插件，其他工具插件。
+## 1.7. 环境变量插件，其他工具插件
 
 ### 1.7.1. gulp-replace，gulp-if，cross-env
 
