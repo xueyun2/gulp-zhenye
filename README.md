@@ -288,7 +288,7 @@ function atuoRelyTask() {
 
 ### 1.7.1. gulp-replace，gulp-if，cross-env
 
-- `gulpif`：更具条件执行对应函数或任务。
+- `gulpif`：根具条件执行对应函数或任务。
 - `cross-env`：配置环境变量，根据环境变量打包对应任务
 - `gulp-replace`：字符串替换插件，可使用正则匹配替换。
 
