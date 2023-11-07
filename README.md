@@ -5,17 +5,23 @@
 
 - [1. Gulp构建前端自动化](#1-gulp构建前端自动化)
   - [1.1. 常用API基础用法](#11-常用api基础用法)
-  - [1.2. 常用插件](#12-常用插件)
+  - [1.2. CSS相关插件](#12-css相关插件)
     - [1.2.1. gulp-sass](#121-gulp-sass)
     - [1.2.2. gulp-uglifycss](#122-gulp-uglifycss)
     - [1.2.3. gulp-autoprefixer@8.0.0](#123-gulp-autoprefixer800)
-    - [1.2.4. gulp-htmlmin，gulp-clean-css，gulp-file-include](#124-gulp-htmlmingulp-clean-cssgulp-file-include)
-      - [1.2.4.1. gulp-file-include](#1241-gulp-file-include)
-    - [1.2.5. gulp-uglify，babel，@babel/preset-env](#125-gulp-uglifybabelbabelpreset-env)
-    - [1.2.6. gulp-webserver](#126-gulp-webserver)
-    - [1.2.7. gulp-npm-dist](#127-gulp-npm-dist)
-    - [1.2.8. gulp-replace，gulp-if，cross-env](#128-gulp-replacegulp-ifcross-env)
-      - [配置package.json打包命令和开发命令](#配置packagejson打包命令和开发命令)
+  - [1.3. HTML相关插件](#13-html相关插件)
+    - [1.3.1. gulp-htmlmin，gulp-clean-css，gulp-file-include](#131-gulp-htmlmingulp-clean-cssgulp-file-include)
+      - [1.3.1.1. gulp-file-include](#1311-gulp-file-include)
+  - [1.4. JavaScript相关插件](#14-javascript相关插件)
+    - [1.4.1. gulp-uglify，babel，@babel/preset-env](#141-gulp-uglifybabelbabelpreset-env)
+  - [1.5. 本地服务插件](#15-本地服务插件)
+    - [1.5.1. gulp-webserver](#151-gulp-webserver)
+  - [1.6. 依赖打包插件](#16-依赖打包插件)
+    - [1.6.1. gulp-npm-dist](#161-gulp-npm-dist)
+  - [1.7. 环境变量插件，其他工具插件。](#17-环境变量插件其他工具插件)
+    - [1.7.1. gulp-replace，gulp-if，cross-env](#171-gulp-replacegulp-ifcross-env)
+      - [1.7.1.1. 配置package.json打包命令和开发命令](#1711-配置packagejson打包命令和开发命令)
+
 
 ## 1.1. 常用API基础用法
 
@@ -43,7 +49,7 @@ function watch(){
 exports.default = series(copyTask);
 ```
 
-## 1.2. 常用插件
+## 1.2. CSS相关插件
 
 ### 1.2.1. gulp-sass
 
@@ -113,7 +119,9 @@ function cssTask() {
 }
 ```
 
-### 1.2.4. gulp-htmlmin，gulp-clean-css，gulp-file-include
+## 1.3. HTML相关插件
+
+### 1.3.1. gulp-htmlmin，gulp-clean-css，gulp-file-include
 
 压缩`HTML`并对静态代码划分一个个文件组件（公共模板）
 
@@ -142,7 +150,7 @@ pnpm add -D  gulp-file-include
 | `trimCustomFragments`   | `Boolean`                     | 修剪周围空格                                                                  |
 | `ignoreCustomFragments` | `arry[]`                      | 允许在匹配时忽略某些片段的正则表达式数组（例如`<?php ... ?>`、`{{ ... }}`等） |
 
-#### 1.2.4.1. gulp-file-include
+#### 1.3.1.1. gulp-file-include
 
 定义公共模板引入
 
@@ -178,7 +186,9 @@ function htmlTask() {
 }
 ```
 
-### 1.2.5. gulp-uglify，babel，@babel/preset-env
+## 1.4. JavaScript相关插件
+
+### 1.4.1. gulp-uglify，babel，@babel/preset-env
 
 压缩和转换`JavaScript`代码。
 
@@ -215,7 +225,9 @@ function jsTask() {
 }
 ```
 
-### 1.2.6. gulp-webserver
+## 1.5. 本地服务插件
+
+### 1.5.1. gulp-webserver
 
 配置一个本地服务器。
 
@@ -248,7 +260,9 @@ function server() {
 
 ```
 
-### 1.2.7. gulp-npm-dist
+## 1.6. 依赖打包插件
+
+### 1.6.1. gulp-npm-dist
 
 打包`node_modules`中的依赖模块到指定目录中。
 
@@ -270,7 +284,9 @@ function atuoRelyTask() {
 }
 ```
 
-### 1.2.8. gulp-replace，gulp-if，cross-env
+## 1.7. 环境变量插件，其他工具插件。
+
+### 1.7.1. gulp-replace，gulp-if，cross-env
 
 - `gulpif`：更具条件执行对应函数或任务。
 - `cross-env`：配置环境变量，根据环境变量打包对应任务
@@ -306,7 +322,7 @@ function atuoRelyTask() {
 }
 ```
 
-#### 配置package.json打包命令和开发命令
+#### 1.7.1.1. 配置package.json打包命令和开发命令
 
 ```json
 "scripts": {
@@ -331,7 +347,3 @@ pnpm dev    # 开发模式
 // env === 'production' || env===preproduction
  const env= process.env.NODE_ENV
 ```
-
-
-
-
