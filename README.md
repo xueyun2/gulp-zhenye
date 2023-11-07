@@ -15,6 +15,7 @@
     - [1.2.6. gulp-webserver](#126-gulp-webserver)
     - [1.2.7. gulp-npm-dist](#127-gulp-npm-dist)
     - [1.2.8. gulp-replace，gulp-if，cross-env](#128-gulp-replacegulp-ifcross-env)
+      - [配置package.json打包命令和开发命令](#配置packagejson打包命令和开发命令)
 
 ## 1.1. 常用API基础用法
 
@@ -304,3 +305,33 @@ function atuoRelyTask() {
     );
 }
 ```
+
+#### 配置package.json打包命令和开发命令
+
+```json
+"scripts": {
+    "build": "cross-env NODE_ENV=production gulp",
+    "dev": "cross-env NODE_ENV=preproduction gulp"
+  }
+```
+
+**运行命令：**
+
+```shell
+pnpm build  # 打包模式
+pnpm dev    # 开发模式
+```
+
+**在gulpfile.js使用：**
+
+- `production`：打包模式
+- `preproduction`：开发者模式
+
+```JavaScript
+// env === 'production' || env===preproduction
+ const env= process.env.NODE_ENV
+```
+
+
+
+
