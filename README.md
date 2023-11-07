@@ -1,6 +1,8 @@
 
 # 1. Gulp构建前端自动化
 
+使用`gulp`构建`PHP`传统项目中的前端代码
+
 - [1. Gulp构建前端自动化](#1-gulp构建前端自动化)
   - [1.1. 常用API基础用法](#11-常用api基础用法)
   - [1.2. 常用插件](#12-常用插件)
@@ -14,9 +16,9 @@
     - [1.2.7. gulp-npm-dist](#127-gulp-npm-dist)
     - [1.2.8. gulp-replace，gulp-if，cross-env](#128-gulp-replacegulp-ifcross-env)
 
-文档地址：<https://www.gulpjs.com.cn/>
-
 ## 1.1. 常用API基础用法
+
+文档地址：<https://www.gulpjs.com.cn/>
 
 在通过`gulp.src()`匹配要打包的文件路径后可以链式调用`pipe()`管道函数。**一切代码压缩处理输出都是在管道函数中完成**。
 
