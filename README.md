@@ -21,8 +21,8 @@
   - [1.7. 环境变量插件，其他工具插件](#17-环境变量插件其他工具插件)
     - [1.7.1. gulp-replace，gulp-if，cross-env](#171-gulp-replacegulp-ifcross-env)
       - [1.7.1.1. 配置package.json打包命令和开发命令](#1711-配置packagejson打包命令和开发命令)
-  - [源映射插件](#源映射插件)
-    - [gulp-sourcemaps](#gulp-sourcemaps)
+  - [1.8. 源映射插件](#18-源映射插件)
+    - [1.8.1. gulp-sourcemaps](#181-gulp-sourcemaps)
 
 ## 1.1. 常用API基础用法
 
@@ -347,9 +347,9 @@ pnpm dev    # 开发模式
  const env= process.env.NODE_ENV
 ```
 
-## 源映射插件
+## 1.8. 源映射插件
 
-### gulp-sourcemaps
+### 1.8.1. gulp-sourcemaps
 
 压缩后的代码定位到源文件中的代码位置
 
