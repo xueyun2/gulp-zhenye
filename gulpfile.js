@@ -13,6 +13,8 @@ const gulpif = require('gulp-if'); //gulp条件语句
 const sourcemaps = require('gulp-sourcemaps'); //源映射
 //忽略HTML中的PHP模板语法或者其他的模板语法
 const Fragments = [/\{\{(.+?)\}\}/g]; //{{}}
+//当前打包模式
+const ENV = process.env.NODE_ENV;
 //匹配文件入口
 const JS_SRC = 'src/access/static/**/*.js';
 const SASS_SRC = 'src/access/static/**/*.scss';
@@ -52,7 +54,7 @@ function server() {
 //打包js
 function jsTask() {
     return src(JS_SRC)
-        .pipe(sourcemaps.init())
+        .pipe(gulpif(ENV != 'production', sourcemaps.init()))
         .pipe(
             babel({
                 presets: ['@babel/env'],
@@ -65,13 +67,13 @@ function jsTask() {
                 },
             })
         )
-        .pipe(sourcemaps.write())
+        .pipe(gulpif(ENV != 'production', sourcemaps.write()))
         .pipe(dest(STATIC));
 }
 //打包scss
 function scssTask() {
     return src(SASS_SRC)
-        .pipe(sourcemaps.init())
+        .pipe(gulpif(ENV != 'production', sourcemaps.init()))
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(
             autoPrefixer(
@@ -84,13 +86,13 @@ function scssTask() {
             )
         )
         .pipe(cleanCSS())
-        .pipe(sourcemaps.write())
+        .pipe(gulpif(ENV != 'production', sourcemaps.write()))
         .pipe(dest(STATIC));
 }
 //打包css
 function cssTask() {
     return src(CSS_SRC)
-        .pipe(sourcemaps.init())
+        .pipe(gulpif(ENV != 'production', sourcemaps.init()))
         .pipe(
             autoPrefixer(
                 'last 3 version',
@@ -102,7 +104,7 @@ function cssTask() {
             )
         )
         .pipe(cleanCSS())
-        .pipe(sourcemaps.write())
+        .pipe(gulpif(ENV != 'production', sourcemaps.write()))
         .pipe(dest(STATIC));
 }
 //复制图片字体资源
@@ -120,12 +122,7 @@ function htmlTask() {
                 })
             )
             //修改打包模式下去掉路径中的access
-            .pipe(
-                gulpif(
-                    process.env.NODE_ENV === 'production',
-                    replace(/\/access\//g, '/')
-                )
-            )
+            .pipe(gulpif(ENV === 'production', replace(/\/access\//g, '/')))
             .pipe(
                 htmlmin({
                     collapseWhitespace: true, //html压缩成一行
