@@ -1,7 +1,463 @@
+// 引入主题颜色
+@import "./theme";
+@import "./color";
+//单位
+$unit: px;
+//是否开启rem计算
+$isRem: false;
+//填充-边距
+$marginSize: 8;
+@function remPx($Size, $is, $units) {
+    @if $is == true {
+        @return calc($Size/20) + $units;
+    } @else {
+        @return $Size + $units;
+    }
+}
+//引入默认组件样式
+// @import "./component";
+
+// 去除标签默认样式
 body,
 html {
-    font-size: 15px;
+    padding: 0;
+    margin: 0;
+    color: $font-color-1;
+    font-size: remPx(16, $isRem, $unit);
+    width: 100%;
+    font-family: "Microsoft YaHei UI";
+    color: $font-color-1;
 }
-.list{
-    background: #000;
+ul,
+li,
+dl,
+dd {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    padding: 0;
+}
+p {
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: $font-color-1;
+}
+i {
+    font-style: normal;
+}
+//清楚边距
+$direction: ("top", "right", "bottom", "left");
+@each $key in $direction {
+    @for $i from 2 to 10 {
+        .clear-m-#{$key}-#{$i} > :nth-child(#{$i}n) {
+            margin-#{$key}: 0;
+        }
+        .clear-p-#{$key}-#{$i} > :nth-child(#{$i}n) {
+            padding-#{$key}: 0;
+        }
+    }
+    .clear-m-even-#{$key} > :nth-child(even) {
+        margin-#{$key}: 0;
+    }
+    .clear-m-odd-#{$key} > :nth-child(odd) {
+        margin-#{$key}: 0;
+    }
+    .clear-p-even-#{$key} > :nth-child(even) {
+        padding-#{$key}: 0;
+    }
+    .clear-p-odd-#{$key} > :nth-child(odd) {
+        padding-#{$key}: 0;
+    }
+}
+//首行缩进
+.text-indent {
+    text-indent: 2em;
+}
+//文本阻止换行
+.text-nowrap {
+    white-space: nowrap;
+}
+// 边距
+@for $i from 1 to 100 {
+    .m-#{$i} {
+        margin: remPx($i, $isRem, $unit);
+    }
+    .m-t-#{$i} {
+        margin-top: remPx($i, $isRem, $unit);
+    }
+    .m-r-#{$i} {
+        margin-right: remPx($i, $isRem, $unit);
+    }
+    .m-b-#{$i} {
+        margin-bottom: remPx($i, $isRem, $unit);
+    }
+    .m-l-#{$i} {
+        margin-left: remPx($i, $isRem, $unit);
+    }
+    .m-lr-#{$i} {
+        margin-left: remPx($i, $isRem, $unit);
+        margin-right: remPx($i, $isRem, $unit);
+    }
+    .m-tb-#{$i} {
+        margin-bottom: remPx($i, $isRem, $unit);
+        margin-top: remPx($i, $isRem, $unit);
+    }
+    // 填充
+    .p-#{$i} {
+        padding: remPx($i, $isRem, $unit);
+    }
+    .p-t-#{$i} {
+        padding-top: remPx($i, $isRem, $unit);
+    }
+    .p-r-#{$i} {
+        padding-right: remPx($i, $isRem, $unit);
+    }
+    .p-b-#{$i} {
+        padding-bottom: remPx($i, $isRem, $unit);
+    }
+    .p-l-#{$i} {
+        padding-left: remPx($i, $isRem, $unit);
+    }
+    .p-lr-#{$i} {
+        padding-left: remPx($i, $isRem, $unit);
+        padding-right: remPx($i, $isRem, $unit);
+    }
+    .p-tb-#{$i} {
+        padding-top: remPx($i, $isRem, $unit);
+        padding-bottom: remPx($i, $isRem, $unit);
+    }
+}
+// 字体
+@for $i from 1 to 100 {
+    .font-#{$i} {
+        font-size: remPx($i, $isRem, $unit);
+    }
+}
+//文本加粗
+.font-bold {
+    font-weight: bold;
+}
+// 文本居中
+.font-center {
+    text-align: center;
+}
+//文本右对齐
+.font-right {
+    text-align: right;
+}
+/* 布局 */
+// 按比例分配
+$per: "%";
+@for $i from 1 to 13 {
+    .flex-#{$i} {
+        flex: $i 0 #{calc(100% / (12% / $i)) + $per};
+    }
+}
+.flex {
+    display: flex;
+}
+/* 允许换行 */
+.flex-wrap {
+    flex-wrap: wrap;
+}
+/* 垂直排列 */
+.flex-column {
+    flex-direction: column;
+}
+
+/* 水平排列 */
+/* 左边排列 */
+.align-h-left {
+    justify-content: flex-start;
+}
+/* 右对齐 */
+.align-h-right {
+    justify-content: flex-end;
+}
+/* 剧中排列 */
+.align-h-center {
+    justify-content: center;
+}
+/* 两端排列 */
+.align-h-between {
+    justify-content: space-between;
+}
+/* 周围空间分布 */
+.align-h-around {
+    justify-content: space-around;
+}
+/* 垂直排列 */
+/* 顶部对齐 */
+.align-v-top {
+    align-items: flex-start;
+}
+/* 底部对齐 */
+.align-v-bottom {
+    align-items: flex-end;
+}
+/* 剧中对齐 */
+.align-v-center {
+    align-items: center;
+}
+//边框
+.border {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: $border-color;
+}
+.border-none {
+    border: none !important;
+}
+@each $key in $direction {
+    .border-#{$key} {
+        border-#{$key}-width: 1px !important;
+        border-#{$key}-color: $border-color;
+        border-#{$key}-style: solid;
+    }
+}
+//边框样式
+$borderStyle: ("dashed", "dotted", "double", "groove");
+@each $key in $direction {
+    .border-#{$key} {
+        border-style: #{$key};
+    }
+}
+//元素圆角
+@for $i from 0 to 50 {
+    .border-radius-#{$i} {
+        border-radius: remPx($i, $isRem, $unit) !important;
+    }
+    .border-tl-radius-#{$i} {
+        border-top-left-radius: remPx($i, $isRem, $unit) !important;
+    }
+    .border-tr-radius-#{$i} {
+        border-top-right-radius: remPx($i, $isRem, $unit) !important;
+    }
+    .border-bl-radius-#{$i} {
+        border-bottom-left-radius: remPx($i, $isRem, $unit) !important;
+    }
+    .border-br-radius-#{$i} {
+        border-bottom-right-radius: remPx($i, $isRem, $unit) !important;
+    }
+}
+//边框粗细
+@for $i from 0 to 10 {
+    .border-w-#{$i} {
+        border-width: remPx($i, $isRem, $unit) !important;
+    }
+}
+//手型
+.pointer {
+    cursor: pointer;
+}
+//头像
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+//关闭图片cover模式
+.img-cover-no {
+    object-fit: none;
+}
+//开启图片cover
+.img-cover {
+    object-fit: cover;
+}
+//禁止元素点击事件
+.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+//文本溢出省略
+.text-hidden-1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@for $i from 2 to 10 {
+    .text-hidden-#{$i} {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: $i;
+        -webkit-box-orient: vertical;
+    }
+}
+//盒子填充距计算在内部
+.box-sizing {
+    box-sizing: border-box;
+}
+
+//行高
+@for $i from 1 to 60 {
+    .line-h-#{$i} {
+        line-height: remPx($i, $isRem, $unit);
+    }
+}
+.line-h-fill {
+    line-height: 100%;
+}
+//宽高
+@for $i from 0 to 500 {
+    .h-#{$i} {
+        height: remPx($i, $isRem, $unit);
+    }
+    .w-#{$i} {
+        width: remPx($i, $isRem, $unit);
+    }
+    .min-w-#{$i} {
+        min-width: remPx($i, $isRem, $unit);
+    }
+    .min-h-#{$i} {
+        min-height: remPx($i, $isRem, $unit);
+    }
+    .max-w-#{$i} {
+        max-width: remPx($i, $isRem, $unit);
+    }
+    .max-h-#{$i} {
+        max-height: remPx($i, $isRem, $unit);
+    }
+}
+//宽度百分比
+$per: "%";
+@for $i from 1 to 100 {
+    .max-w-per-#{$i} {
+        max-width: #{$i}+ $per;
+    }
+    .max-h-per-#{$i} {
+        max-height: #{$i}+ $per;
+    }
+    .min-h-per-#{$i} {
+        min-height: #{$i}+ $per;
+    }
+    .min-w-per-#{$i} {
+        min-width: #{$i}+ $per;
+    }
+    .w-per-#{$i} {
+        width: #{$i}+ $per;
+    }
+    .h-per-#{$i} {
+        height: #{$i}+ $per;
+    }
+}
+.max-w-fill {
+    max-width: 100%;
+}
+.max-h-fill {
+    max-height: 100%;
+}
+.w-fill {
+    width: 100%;
+}
+.h-fill {
+    height: 100%;
+}
+//定位偏移
+$neg: "-";
+@for $i from 0 to 500 {
+    //正数偏移
+    .left-#{$i} {
+        left: remPx($i, $isRem, $unit);
+    }
+    .right-#{$i} {
+        right: remPx($i, $isRem, $unit);
+    }
+    .bottom-#{$i} {
+        bottom: remPx($i, $isRem, $unit);
+    }
+    .top-#{$i} {
+        top: remPx($i, $isRem, $unit);
+    }
+    // 负数偏移
+    .left-burden-#{$i} {
+        left: remPx(-$i, $isRem, $unit);
+    }
+    .right-burden-#{$i} {
+        right: remPx(-$i, $isRem, $unit);
+    }
+    .bottom-burden-#{$i} {
+        bottom: remPx(-$i, $isRem, $unit);
+    }
+    .top-burden-#{$i} {
+        top: remPx(-$i, $isRem, $unit);
+    }
+}
+//层级关系
+@for $i from 0 to 500 {
+    .z-index-#{$i} {
+        z-index: $i;
+    }
+}
+//定位元素居中
+// 定位
+.rela {
+    position: relative;
+}
+.abso {
+    position: absolute;
+}
+.sticky {
+    position: sticky;
+}
+.fixed {
+    position: fixed;
+}
+//定位垂直居中
+.abso-v-center {
+    top: 50%;
+    transform: translateX(-50%);
+}
+//定位水平居中
+.abso-h-center {
+    left: 50%;
+    transform: translateY(-50%);
+}
+//定位垂直水平居中
+.abso-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+//margin水平居中
+.m-auto {
+    margin: 0 auto;
+}
+//隐藏元素
+.overflow-y-auto {
+    overflow-y: auto;
+}
+.overflow-x-auto {
+    overflow-x: auto;
+}
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+//元素类型
+.d-block {
+    display: block;
+}
+.d-none {
+    display: none;
+}
+.d-inline {
+    display: inline;
+}
+.d-inline-block {
+    display: inline-block;
 }

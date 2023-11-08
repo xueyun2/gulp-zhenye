@@ -7,10 +7,10 @@
   - [1.1. 常用API基础用法](#11-常用api基础用法)
   - [1.2. CSS相关插件](#12-css相关插件)
     - [1.2.1. gulp-sass](#121-gulp-sass)
-    - [1.2.2. gulp-uglifycss](#122-gulp-uglifycss)
+    - [1.2.2. gulp-clean-css](#122-gulp-clean-css)
     - [1.2.3. gulp-autoprefixer@8.0.0](#123-gulp-autoprefixer800)
   - [1.3. HTML相关插件](#13-html相关插件)
-    - [1.3.1. gulp-htmlmin，gulp-clean-css，gulp-file-include](#131-gulp-htmlmingulp-clean-cssgulp-file-include)
+    - [1.3.1. gulp-htmlmin，gulp-file-include](#131-gulp-htmlmingulp-file-include)
       - [1.3.1.1. gulp-file-include](#1311-gulp-file-include)
   - [1.4. JavaScript相关插件](#14-javascript相关插件)
     - [1.4.1. gulp-uglify，babel，@babel/preset-env](#141-gulp-uglifybabelbabelpreset-env)
@@ -21,6 +21,8 @@
   - [1.7. 环境变量插件，其他工具插件](#17-环境变量插件其他工具插件)
     - [1.7.1. gulp-replace，gulp-if，cross-env](#171-gulp-replacegulp-ifcross-env)
       - [1.7.1.1. 配置package.json打包命令和开发命令](#1711-配置packagejson打包命令和开发命令)
+  - [源映射插件](#源映射插件)
+    - [gulp-sourcemaps](#gulp-sourcemaps)
 
 ## 1.1. 常用API基础用法
 
@@ -72,24 +74,24 @@ function scssTask() {
 }
 ```
 
-### 1.2.2. gulp-uglifycss
+### 1.2.2. gulp-clean-css
 
 给`css`压缩。
 
 **安装：**
 
 ```shell
-pnpm add -D gulp-uglifycss
+pnpm add -D gulp-clean-css
 ```
 
 **使用：**
 
 ```JavaScript
-const uglifycss = require('gulp-uglifycss');
+const cleanCSS = require('gulp-clean-css');
 //创建打包scss任务
 function cssTask() {
     return src('./src/*.css').
-        pipe(uglifycss()).
+        pipe(cleanCSS()).
         pipe(dest('./output/'))
 }
 ```
@@ -120,19 +122,17 @@ function cssTask() {
 
 ## 1.3. HTML相关插件
 
-### 1.3.1. gulp-htmlmin，gulp-clean-css，gulp-file-include
+### 1.3.1. gulp-htmlmin，gulp-file-include
 
 压缩`HTML`并对静态代码划分一个个文件组件（公共模板）
 
 - `gulp-htmlmin`：压缩`html`代码。
-- `gulp-clean-css`：压缩`style`中的`css`代码。
 - `gulp-file-include`：讲静态`html`划分成一个个模板。
 
 **安装：**
 
 ```shell
 pnpm add -D  gulp-htmlmin
-pnpm add -D  gulp-clean-css
 pnpm add -D  gulp-file-include
 ```
 
@@ -345,4 +345,39 @@ pnpm dev    # 开发模式
 ```JavaScript
 // env === 'production' || env===preproduction
  const env= process.env.NODE_ENV
+```
+
+## 源映射插件
+
+### gulp-sourcemaps
+
+压缩后的代码定位到源文件中的代码位置
+
+**安装：**
+
+```shell
+pnpm add -D gulp-sourcemaps
+```
+
+**使用：**
+
+```JavaScript
+function jsTask() {
+    return src('input/*.js')
+        .pipe(sourcemaps.init())
+        .pipe(
+            babel({
+                presets: ['@babel/env'],
+            })
+        )
+        .pipe(
+            uglify({
+                output: {
+                    ascii_only: true, //把中文转换成Unicode编码
+                },
+            })
+        )
+        .pipe(sourcemaps.write())
+        .pipe(dest('./output/'));
+}
 ```

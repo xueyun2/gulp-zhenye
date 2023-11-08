@@ -1,6 +1,5 @@
 const { src, dest, series, watch } = require('gulp');
 const sass = require('gulp-sass')(require('sass')); //scss文件编译成css
-const uglifycss = require('gulp-uglifycss'); //压缩CSS
 const autoPrefixer = require('gulp-autoprefixer'); //给css自动添加前缀兼容
 const htmlmin = require('gulp-htmlmin'); //压缩Html
 const uglify = require('gulp-uglify'); //压缩js子支持ES5压缩
@@ -11,6 +10,7 @@ const fileinclude = require('gulp-file-include'); //引入静态模板
 const npmDist = require('gulp-npm-dist'); //打包依赖
 const replace = require('gulp-replace'); //处理路径可以用正则匹配
 const gulpif = require('gulp-if'); //gulp条件语句
+const sourcemaps = require('gulp-sourcemaps'); //源映射
 //忽略HTML中的PHP模板语法或者其他的模板语法
 const Fragments = [/\{\{(.+?)\}\}/g]; //{{}}
 //匹配文件入口
@@ -33,6 +33,7 @@ function atuoRelyTask() {
 //监听文件，运行指定任务。
 function watchFile() {
     watch(JS_SRC, jsTask);
+    watch(CSS_SRC, cssTask);
     watch(SASS_SRC, scssTask);
     watch(OTHER_SRC, otherTask);
     watch(HTML_SRC, htmlTask);
@@ -51,6 +52,7 @@ function server() {
 //打包js
 function jsTask() {
     return src(JS_SRC)
+        .pipe(sourcemaps.init())
         .pipe(
             babel({
                 presets: ['@babel/env'],
@@ -63,21 +65,44 @@ function jsTask() {
                 },
             })
         )
+        .pipe(sourcemaps.write())
         .pipe(dest(STATIC));
 }
 //打包scss
 function scssTask() {
     return src(SASS_SRC)
-        .pipe(sass())
-        .pipe(autoPrefixer('last 3 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(uglifycss())
+        .pipe(sourcemaps.init())
+        .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+        .pipe(
+            autoPrefixer(
+                'last 3 version',
+                'safari 5',
+                'ie 6-9',
+                'chrome 62',
+                'opera 48',
+                'edge 16'
+            )
+        )
+        .pipe(cleanCSS())
+        .pipe(sourcemaps.write())
         .pipe(dest(STATIC));
 }
 //打包css
 function cssTask() {
     return src(CSS_SRC)
-        .pipe(autoPrefixer('last 3 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(uglifycss())
+        .pipe(sourcemaps.init())
+        .pipe(
+            autoPrefixer(
+                'last 3 version',
+                'safari 5',
+                'ie 6-9',
+                'chrome 62',
+                'opera 48',
+                'edge 16'
+            )
+        )
+        .pipe(cleanCSS())
+        .pipe(sourcemaps.write())
         .pipe(dest(STATIC));
 }
 //复制图片字体资源
@@ -120,8 +145,8 @@ function htmlTask() {
 function bulid() {
     return series(
         jsTask,
-        scssTask,
         cssTask,
+        scssTask,
         otherTask,
         atuoRelyTask,
         htmlTask,
@@ -132,8 +157,8 @@ function bulid() {
 function dev() {
     return series(
         jsTask,
-        scssTask,
         cssTask,
+        scssTask,
         otherTask,
         atuoRelyTask,
         htmlTask,

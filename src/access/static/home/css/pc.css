@@ -1,0 +1,19 @@
+.shenm {
+    width: 100px;
+    height: 200px;
+    background-color: aqua;
+    border: 2px solid #000;
+}
+
+.test {
+    width: 500px;
+    height: 100px;
+    border: 1px solid #0a8dda;
+    box-sizing:border-box;
+}
+.autoplacement-example {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 20px;
+  }
