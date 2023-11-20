@@ -1,4 +1,4 @@
-const { src, dest, series, watch } = require('gulp');
+const { src, dest, series, watch,parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass')); //scss文件编译成css
 const autoPrefixer = require('gulp-autoprefixer'); //给css自动添加前缀兼容
 const htmlmin = require('gulp-htmlmin'); //压缩Html
@@ -11,6 +11,7 @@ const npmDist = require('gulp-npm-dist'); //打包依赖
 const replace = require('gulp-replace'); //处理路径可以用正则匹配
 const gulpif = require('gulp-if'); //gulp条件语句
 const sourcemaps = require('gulp-sourcemaps'); //源映射
+const postcss = require('gulp-postcss'); //转换css代码
 //忽略HTML中的PHP模板语法或者其他的模板语法
 const Fragments = [/\{\{(.+?)\}\}/g]; //{{}}
 //当前打包模式
@@ -38,7 +39,7 @@ function watchFile() {
     watch(CSS_SRC, cssTask);
     watch(SASS_SRC, scssTask);
     watch(OTHER_SRC, otherTask);
-    watch(HTML_SRC, htmlTask);
+    watch(HTML_SRC,parallel(htmlTask,cssTask));
 }
 //创建本地服务
 function server() {
@@ -93,6 +94,7 @@ function scssTask() {
 function cssTask() {
     return src(CSS_SRC)
         .pipe(gulpif(ENV != 'production', sourcemaps.init()))
+        .pipe(postcss())
         .pipe(
             autoPrefixer(
                 'last 3 version',
