@@ -12,6 +12,7 @@ const replace = require('gulp-replace'); //处理路径可以用正则匹配
 const gulpif = require('gulp-if'); //gulp条件语句
 const sourcemaps = require('gulp-sourcemaps'); //源映射
 const postcss = require('gulp-postcss'); //转换css代码
+const filter = require('gulp-filter');//过滤文件
 //忽略HTML中的PHP模板语法或者其他的模板语法
 const Fragments = [/\{\{(.+?)\}\}/g]; //{{}}
 //当前打包模式
@@ -26,7 +27,8 @@ const HTML_SRC = 'src/app/**/*.html';
 //输入目录
 const STATIC = './access/static/'; //静态资源目录
 const VIEWS = './app/'; //html目录
-
+//过滤文件
+const filterComponent = filter(['**', '!*src/app/component']);
 //自动打包依赖
 function atuoRelyTask() {
     return src(npmDist(), { base: './node_modules/' }).pipe(
@@ -117,6 +119,7 @@ function otherTask() {
 function htmlTask() {
     return (
         src(HTML_SRC)
+            .pipe(filterComponent)
             .pipe(
                 fileinclude({
                     prefix: '@@',
