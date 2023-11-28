@@ -1,4 +1,4 @@
-const { src, dest, series, watch,parallel } = require('gulp');
+const { src, dest, series, watch, parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass')); //scss文件编译成css
 const autoPrefixer = require('gulp-autoprefixer'); //给css自动添加前缀兼容
 const htmlmin = require('gulp-htmlmin'); //压缩Html
@@ -12,11 +12,12 @@ const replace = require('gulp-replace'); //处理路径可以用正则匹配
 const gulpif = require('gulp-if'); //gulp条件语句
 const sourcemaps = require('gulp-sourcemaps'); //源映射
 const postcss = require('gulp-postcss'); //转换css代码
-const filter = require('gulp-filter');//过滤文件
 //忽略HTML中的PHP模板语法或者其他的模板语法
 const Fragments = [/\{\{(.+?)\}\}/g]; //{{}}
 //当前打包模式
 const ENV = process.env.NODE_ENV;
+//忽略文件
+const filterHtml = ['!src/app/**/component/*.html']
 //匹配文件入口
 const JS_SRC = 'src/access/static/**/*.js';
 const SASS_SRC = 'src/access/static/**/*.scss';
@@ -27,8 +28,6 @@ const HTML_SRC = 'src/app/**/*.html';
 //输入目录
 const STATIC = './access/static/'; //静态资源目录
 const VIEWS = './app/'; //html目录
-//过滤文件
-const filterComponent = filter(['**', '!*src/app/component']);
 //自动打包依赖
 function atuoRelyTask() {
     return src(npmDist(), { base: './node_modules/' }).pipe(
@@ -41,7 +40,7 @@ function watchFile() {
     watch(CSS_SRC, cssTask);
     watch(SASS_SRC, scssTask);
     watch(OTHER_SRC, otherTask);
-    watch(HTML_SRC,parallel(htmlTask,cssTask));
+    watch(HTML_SRC, parallel(htmlTask,cssTask));
 }
 //创建本地服务
 function server() {
@@ -50,7 +49,7 @@ function server() {
             livereload: true, //文件修改自动刷新
             host: 'localhost',
             port: 9900,
-            open: '/app/view/home/index.html', //要打开的页面，指向打包成功后的文件目录
+            open: '/app/views/home/index.html', //要打开的页面，指向打包成功后的文件目录
         })
     );
 }
@@ -118,8 +117,7 @@ function otherTask() {
 //打包HTML
 function htmlTask() {
     return (
-        src(HTML_SRC)
-            .pipe(filterComponent)
+        src([HTML_SRC,...filterHtml])
             .pipe(
                 fileinclude({
                     prefix: '@@',
@@ -131,7 +129,7 @@ function htmlTask() {
             .pipe(
                 htmlmin({
                     collapseWhitespace: true, //html压缩成一行
-                    minifyJS: true, //压缩内嵌js无法压缩ES6语法
+                    minifyJS: uglify(), //压缩内嵌js无法压缩ES6语法
                     minifyCSS: cleanCSS({ compatibility: 'ie8' }), //压缩html中的css
                     removeComments: true, //删除html中的注释
                     removeEmptyAttributes: true, //删除包空的节点属性
@@ -145,27 +143,24 @@ function htmlTask() {
 }
 //打包上线模式
 function bulid() {
-    return series(
-        jsTask,
-        cssTask,
-        scssTask,
-        otherTask,
-        atuoRelyTask,
-        htmlTask,
-        watchFile
+    return parallel(
+        watchFile,
+        series(jsTask, cssTask, scssTask, otherTask, atuoRelyTask, htmlTask)
     );
 }
 //开发者模式
 function dev() {
-    return series(
-        jsTask,
-        cssTask,
-        scssTask,
-        otherTask,
-        atuoRelyTask,
-        htmlTask,
-        server,
-        watchFile
+    return parallel(
+        watchFile,
+        series(
+            jsTask,
+            cssTask,
+            scssTask,
+            otherTask,
+            atuoRelyTask,
+            htmlTask,
+            server
+        )
     );
 }
 exports.default = process.env.NODE_ENV === 'production' ? bulid() : dev();
