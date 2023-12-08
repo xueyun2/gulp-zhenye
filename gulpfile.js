@@ -48,8 +48,8 @@ function server() {
       livereload: true, //文件修改自动刷新
       host: 'localhost',
       port: 9900,
-      open: '/app/views/home/index.html', //要打开的页面，指向打包成功后的文件目录
-    }),
+      open: '/app/views/home/index.html' //要打开的页面，指向打包成功后的文件目录
+    })
   );
 }
 //打包js
@@ -61,15 +61,15 @@ function jsTask() {
     .pipe(gulpif(ENV != 'production', sourcemaps.init()))
     .pipe(
       babel({
-        presets: ['@babel/env'],
-      }),
+        presets: ['@babel/env']
+      })
     )
     .pipe(
       uglify({
         output: {
-          ascii_only: true, //把中文转换成Unicode编码
-        },
-      }),
+          ascii_only: true //把中文转换成Unicode编码
+        }
+      })
     )
     .pipe(gulpif(ENV != 'production', sourcemaps.write()))
     .pipe(dest(STATIC));
@@ -86,8 +86,8 @@ function scssTask() {
         'ie 6-9',
         'chrome 62',
         'opera 48',
-        'edge 16',
-      ),
+        'edge 16'
+      )
     )
     .pipe(cleanCSS())
     .pipe(gulpif(ENV != 'production', sourcemaps.write()))
@@ -105,8 +105,8 @@ function cssTask() {
         'ie 6-9',
         'chrome 62',
         'opera 48',
-        'edge 16',
-      ),
+        'edge 16'
+      )
     )
     .pipe(cleanCSS())
     .pipe(gulpif(ENV != 'production', sourcemaps.write()))
@@ -123,8 +123,8 @@ function htmlTask() {
       .pipe(
         fileinclude({
           prefix: '@@',
-          basepath: '@file',
-        }),
+          basepath: '@file'
+        })
       )
       //修改打包模式下去掉路径中的access
       .pipe(gulpif(ENV === 'production', replace(/\/access\//g, '/')))
@@ -137,8 +137,8 @@ function htmlTask() {
           removeEmptyAttributes: true, //删除包空的节点属性
           trimCustomFragments: true, //修剪周围空格
           ignoreCustomFragments: Fragments, //允许在匹配时忽略某些片段的正则表达式数组（例如<?php ... ?>、{{ ... }}等）
-          minifyURLs: true,
-        }),
+          minifyURLs: true
+        })
       )
       .pipe(dest(VIEWS))
   );
@@ -147,22 +147,14 @@ function htmlTask() {
 function bulid() {
   return parallel(
     watchFile,
-    series(jsTask, cssTask, scssTask, otherTask, atuoRelyTask, htmlTask),
+    series(jsTask, cssTask, scssTask, otherTask, atuoRelyTask, htmlTask)
   );
 }
 //开发者模式
 function dev() {
   return parallel(
     watchFile,
-    series(
-      jsTask,
-      cssTask,
-      scssTask,
-      otherTask,
-      atuoRelyTask,
-      htmlTask,
-      server,
-    ),
+    series(jsTask, cssTask, scssTask, otherTask, atuoRelyTask, htmlTask, server)
   );
 }
 exports.default = process.env.NODE_ENV === 'production' ? bulid() : dev();
