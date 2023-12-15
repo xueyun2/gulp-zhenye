@@ -8,6 +8,7 @@ const cleanCSS = require('gulp-clean-css'); //html压缩内置style
 const webserver = require('gulp-webserver'); //本地服务
 const fileinclude = require('gulp-file-include'); //引入静态模板
 const npmDist = require('gulp-npm-dist'); //打包依赖
+const useref = require('gulp-useref'); //打包html中引入的依赖包
 const replace = require('gulp-replace'); //处理路径可以用正则匹配
 const gulpif = require('gulp-if'); //gulp条件语句
 const sourcemaps = require('gulp-sourcemaps'); //源映射
@@ -131,7 +132,10 @@ function htmlTask() {
       .pipe(
         htmlmin({
           collapseWhitespace: true, //html压缩成一行
-          minifyJS: uglify(), //压缩内嵌js无法压缩ES6语法
+          minifyJS: function(text){
+            let jsCode = uglify(text)
+            return jsCode
+          } , //压缩内嵌js无法压缩ES6语法
           minifyCSS: cleanCSS({ compatibility: 'ie8' }), //压缩html中的css
           removeComments: true, //删除html中的注释
           removeEmptyAttributes: true, //删除包空的节点属性

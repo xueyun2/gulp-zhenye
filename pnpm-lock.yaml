@@ -46,6 +46,9 @@ devDependencies:
   gulp-clean-css:
     specifier: ^4.3.0
     version: 4.3.0
+  gulp-concat:
+    specifier: ^2.6.1
+    version: 2.6.1
   gulp-eslint:
     specifier: ^6.0.0
     version: 6.0.0
@@ -76,6 +79,9 @@ devDependencies:
   gulp-uglify:
     specifier: ^3.0.2
     version: 3.0.2
+  gulp-useref:
+    specifier: ^5.0.0
+    version: 5.0.0
   gulp-webserver:
     specifier: ^0.9.1
     version: 0.9.1
@@ -2221,6 +2227,12 @@ packages:
       typedarray: 0.0.6
     dev: true
 
+  /concat-with-sourcemaps@1.1.0:
+    resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
+    dependencies:
+      source-map: 0.6.1
+    dev: true
+
   /connect-livereload@0.4.1:
     resolution: {integrity: sha512-y/4fDdcveHQsVXTJeAr8HHLwul5M3VI071pEaov/jiCz2HIrmZynFHuOn1CfQ8euUsdjR1Ppwsb9mgBOSij3vw==}
     dev: true
@@ -2534,6 +2546,10 @@ packages:
     resolution: {integrity: sha512-+AWBwjGadtksxjOQSFDhPNQbed7icNXApT4+2BNpsXzcCBiInq2H9XW0O8sfHFaPmnQRs7cg/P0fAr2IWQSW0g==}
     dependencies:
       readable-stream: 1.1.14
+    dev: true
+
+  /duplexer@0.1.2:
+    resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
     dev: true
 
   /duplexify@3.7.1:
@@ -2863,6 +2879,18 @@ packages:
     dependencies:
       d: 1.0.1
       es5-ext: 0.10.62
+    dev: true
+
+  /event-stream@4.0.1:
+    resolution: {integrity: sha512-qACXdu/9VHPBzcyhdOWR5/IahhGMf0roTeZJfzz077GwylcDd90yOHLouhmv7GJ5XzPi6ekaQWd8AvPP2nOvpA==}
+    dependencies:
+      duplexer: 0.1.2
+      from: 0.1.7
+      map-stream: 0.0.7
+      pause-stream: 0.0.11
+      split: 1.0.1
+      stream-combiner: 0.2.2
+      through: 2.3.8
     dev: true
 
   /execa@5.1.1:
@@ -3232,6 +3260,10 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /from@0.1.7:
+    resolution: {integrity: sha512-twe20eF1OxVxp/ML/kq2p1uc6KvFK/+vs8WjEbeKmV2He22MKm7YF2ANIt+EOqhJ5L3K/SuuPhk0hWQDjOM23g==}
+    dev: true
+
   /fs-mkdirp-stream@1.0.0:
     resolution: {integrity: sha512-+vSd9frUnapVC2RZYfL3FCB2p3g4TBhaUmrsWlSudsGdnxIuUvBB2QM1VZeBtc49QFwrp+wQLrDs3+xxDgI5gQ==}
     engines: {node: '>= 0.10'}
@@ -3511,6 +3543,15 @@ packages:
       - supports-color
     dev: true
 
+  /gulp-concat@2.6.1:
+    resolution: {integrity: sha512-a2scActrQrDBpBbR3WUZGyGS1JEPLg5PZJdIa7/Bi3GuKAmPYDK6SFhy/NZq5R8KsKKFvtfR0fakbUCcKGCCjg==}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      concat-with-sourcemaps: 1.1.0
+      through2: 2.0.5
+      vinyl: 2.2.1
+    dev: true
+
   /gulp-eslint@6.0.0:
     resolution: {integrity: sha512-dCVPSh1sA+UVhn7JSQt7KEb4An2sQNbOdB3PA8UCfxsoPlAKjJHxYHGXdXC7eb+V1FAnilSFFqslPrq037l1ig==}
     dependencies:
@@ -3631,6 +3672,21 @@ packages:
       through2: 2.0.5
       uglify-js: 3.17.4
       vinyl-sourcemaps-apply: 0.2.1
+    dev: true
+
+  /gulp-useref@5.0.0:
+    resolution: {integrity: sha512-YNnc+DTMBBVoWXunT2RvWuUReZEjzS98XvLXrMLE3uoouQ9to8R4cfUuJzp9i1IJ6+DT0tBvyNVDrkz3NuXIiA==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      event-stream: 4.0.1
+      extend: 3.0.2
+      glob: 7.2.3
+      gulp-concat: 2.6.1
+      gulp-if: 3.0.0
+      plugin-error: 1.0.1
+      through2: 4.0.2
+      useref: 1.4.4
+      vinyl-fs: 3.0.3
     dev: true
 
   /gulp-util@2.2.20:
@@ -4547,6 +4603,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /map-stream@0.0.7:
+    resolution: {integrity: sha512-C0X0KQmGm3N2ftbTGBhSyuydQ+vV1LC3f3zPvT3RXHXNZrvfPZcoXp/N5DOa8vedX/rTMm2CjTtivFg2STJMRQ==}
+    dev: true
+
   /map-visit@1.0.0:
     resolution: {integrity: sha512-4y7uGv8bd2WdM9vpQsiQNo41Ln1NvhvDRuVt0k2JZQ+ezN2uaQes7lZeZ+QQUHOLQAtDaBJ+7wCbi+ab/KFs+w==}
     engines: {node: '>=0.10.0'}
@@ -5177,6 +5237,12 @@ packages:
       graceful-fs: 4.2.11
       pify: 2.3.0
       pinkie-promise: 2.0.1
+    dev: true
+
+  /pause-stream@0.0.11:
+    resolution: {integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==}
+    dependencies:
+      through: 2.3.8
     dev: true
 
   /picocolors@0.2.1:
@@ -6018,6 +6084,12 @@ packages:
       extend-shallow: 3.0.2
     dev: true
 
+  /split@1.0.1:
+    resolution: {integrity: sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==}
+    dependencies:
+      through: 2.3.8
+    dev: true
+
   /sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
@@ -6042,6 +6114,13 @@ packages:
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /stream-combiner@0.2.2:
+    resolution: {integrity: sha512-6yHMqgLYDzQDcAkL+tjJDC5nSNuNIx0vZtRZeiPh7Saef7VHX9H5Ijn9l2VIol2zaNYlYEX6KyuT/237A58qEQ==}
+    dependencies:
+      duplexer: 0.1.2
+      through: 2.3.8
     dev: true
 
   /stream-exhaust@1.0.2:
@@ -6623,6 +6702,11 @@ packages:
   /use@3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /useref@1.4.4:
+    resolution: {integrity: sha512-Hcr9SSq1OsLSa9VAVtA28j8HrpFB2AdbRAkFPbBArDe6y54jQmgulQRxphdi5TAjVPj0mmEJfjBUuZArsmfsqQ==}
+    engines: {node: '>=4'}
     dev: true
 
   /util-deprecate@1.0.2:
